@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2Inclusion</title>
+     <link rel="stylesheet" type="text/css" href="volunteer.css">
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="volunteer-title">
+        Я - Волонтёр!
+    </div>
+    
+    <div class="control-panel">
+        <button class="btn location-btn" onclick="getUserLocation()">
+            🎯 Моё местоположение
+        </button>
+        <button class="btn" onclick="showMoscow()">
+            🏢 Москва
+        </button>
+    </div>
+
+    <div class="address-input">
+        <label for="userAddress">Введите свой адрес:</label>
+        <div class="address-input-group">
+            <input type="text" id="userAddress" placeholder="Например: Москва, ул. Тверская, 1">
+            <button class="apply-btn" onclick="saveAddress()">✅ Применить</button>
+        </div>
+        <div class="saved-address" id="savedAddress" style="display: none;">
+            <strong>Сохранённый адрес:</strong> <span id="savedAddressText"></span>
+        </div>
+    </div>
+
+    <!-- ФИЛЬТРЫ -->
+    <div class="filters-panel" id="filtersPanel" style="display: none;">
+        <div class="filters-header">
+            <h3>🔍 Фильтры поиска</h3>
+            <button class="close-btn" onclick="toggleFilters()">×</button>
+        </div>
+        
+        <div class="filter-group">
+            <!-- Города можно будет добавлять -->
+            <label for="cityFilter">Город:</label>
+            <select id="cityFilter">
+                <option value="all">Все города</option>
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Новосибирск">Новосибирск</option>
+                <option value="Екатеринбург">Екатеринбург</option>
+                <option value="Казань">Казань</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="radiusFilter">Радиус поиска от адреса:</label>
+            <select id="radiusFilter">
+                <option value="0">Любой радиус</option>
+                <option value="1">1 км</option>
+                <option value="3">3 км</option>
+                <option value="5">5 км</option>
+                <option value="10">10 км</option>
+                <option value="15">15 км</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="disabilityFilter">Тип инвалидности:</label>
+            <select id="disabilityFilter">
+                <option value="all">Все типы</option>
+                <option value="Опорно-двигательный аппарат">Опорно-двигательный аппарат</option>
+                <option value="Нарушение зрения">Нарушение зрения</option>
+                <option value="Нарушение слуха">Нарушение слуха</option>
+                <option value="Общее заболевание">Общее заболевание</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="urgencyFilter">Срочность:</label>
+            <select id="urgencyFilter">
+                <option value="all">Все заявки</option>
+                <option value="urgent">Только срочные</option>
+                <option value="normal">Только обычные</option>
+            </select>
+        </div>
+
+        <div class="filter-results" id="filterResults">
+            Показано: 10 из 10 заявок
+        </div>
+
+        <div class="filter-actions">
+            <button class="filter-btn reset" onclick="resetFilters()">🔄 Сбросить</button>
+            <button class="filter-btn" onclick="applyFilters()">✅ Применить фильтры</button>
+        </div>
+    </div>
+
+    <button class="filters-toggle" id="filtersToggle" onclick="toggleFilters()">
+        🔍
+    </button>
+
+    <button class="task-list-btn" onclick="toggleTaskList()">
+        ☰ Задачи
+    </button>
+    
+    <div class="coordinates" id="coordinates">
+        Координаты: не определены
+    </div>
+    
+    <div class="status" id="status">
+        Карта загружается...
+    </div>
+
+    <div class="route-info" id="routeInfo">
+        <strong>Информация о маршруте:</strong>
+        <div id="routeDetails">Маршрут не построен</div>
+    </div>
+
+    <div class="marker-popup" id="markerPopup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <h3 id="popupName"></h3>
+        <p><strong>Возраст:</strong> <span id="popupAge"></span></p>
+        <p><strong>Тип инвалидности:</strong> <span id="popupDisability"></span></p>
+        <p><strong>Описание помощи:</strong> <span id="popupDescription"></span></p>
+        <p><strong>Дата и время:</strong> <span id="popupDateTime"></span></p>
+        <button class="respond-btn" onclick="showRouteChoice()">🗺️ Откликнуться на помощь</button>
+    </div>
+
+    <div class="route-choice-popup" id="routeChoicePopup">
+        <button class="close-btn" onclick="closeRouteChoicePopup()">×</button>
+        <h3>Выберите начало маршрута</h3>
+        <button class="route-choice-btn location" onclick="buildRouteFromLocation()">
+            📍 От моего местоположения
+        </button>
+        <button class="route-choice-btn address" onclick="buildRouteFromAddress()">
+            🏠 От сохранённого адреса
+        </button>
+    </div>
+
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="volonteer.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2Inclusion - Помощь для людей с ОВЗ</title>
+    <link rel="stylesheet" type="text/css" href="OVZ.css">
+
+</head>
+<body>
+    <div id="map"></div>
+    
+    <!-- Панель задач слева с возможностью сворачивания -->
+    <div class="tasks-panel" id="tasksPanel">
+        <div class="tasks-panel-header" onclick="toggleTasksPanel()">
+            <h3>Мои задачи</h3>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="tasks-panel-content">
+            <div id="tasksList">
+                <div class="no-tasks">Задач пока нет</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="control-panel">
+        <button class="btn location-btn" onclick="getUserLocation()">
+            🎯 Моё местоположение
+        </button>
+        <button class="btn" onclick="showMoscow()">
+            🏢 Москва
+        </button>
+    </div>
+
+    <button class="add-task-btn" onclick="showAddTaskModal()">
+        +
+    </button>
+    
+    <div class="coordinates" id="coordinates">
+        Координаты: не определены
+    </div>
+
+    <!-- Модальное окно добавления задачи -->
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddTaskModal()">&times;</span>
+            <div class="modal-title">Добавьте вашу задачу</div>
+            
+            <form id="taskForm">
+                <div class="form-group">
+                    <label class="form-label">1) Укажите ваш возраст</label>
+                    <input type="number" class="form-input" id="userAge" min="1" max="120" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2) Укажите тип инвалидности</label>
+                    <select class="form-select" id="disabilityType" required>
+                        <option value="">Выберите тип инвалидности</option>
+                        <option value="Опорно-двигательный аппарат">Опорно-двигательный аппарат</option>
+                        <option value="Нарушение зрения">Нарушение зрения</option>
+                        <option value="Нарушение слуха">Нарушение слуха</option>
+                        <option value="Ментальные нарушения">Ментальные нарушения</option>
+                        <option value="Общее заболевание">Общее заболевание</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3) Опишите, чем вам нужно помочь</label>
+                    <textarea class="form-textarea" id="helpDescription" placeholder="Подробно опишите, какая помощь вам требуется..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4) Когда вам нужно помочь (дата и время)</label>
+                    <input type="datetime-local" class="form-input" id="helpDateTime" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">5) Маршрут помощи</label>
+                    <div class="points-group">
+                        <div class="point-input">
+                            <label class="form-label">Точка А (откуда)</label>
+                            <input type="text" class="form-input" id="pointA" placeholder="Например: Москва, ул. Тверская, 1" required>
+                        </div>
+                        <div class="point-input">
+                            <label class="form-label">Точка Б (куда)</label>
+                            <input type="text" class="form-input" id="pointB" placeholder="Например: Москва, ул. Арбат, 25" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitTaskBtn">Далее</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                Задача успешно добавлена! Откликов: 0
+            </div>
+        </div>
+    </div>
+
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="OVZ.js"></script>
+
+</body>
+</html>
